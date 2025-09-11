@@ -1,0 +1,21 @@
+# Logs et fichiers temporaires
+*.log
+*.tmp
+
+# Cache
+cache/
+tmp/
+
+# Docker volumes
+data/
+db_data/
+
+# Composer
+/vendor/
+composer.lock
+
+# Node
+/node_modules/
+
+# Environnement
+.env
