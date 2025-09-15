@@ -33,3 +33,23 @@ INSERT INTO categories (nom, description) VALUES
 ('Informatique', 'Projets liés au développement web, logiciels, IT'),
 ('Commerce', 'Projets liés à la vente et distribution'),
 ('Marketing', 'Projets liés à la communication et la publicité');
+
+CREATE TABLE progression (
+    id_progression INT AUTO_INCREMENT PRIMARY KEY,
+    id_user INT NOT NULL,
+    id_domaine INT NOT NULL,
+    etape VARCHAR(255) NOT NULL,
+    statut ENUM('en cours', 'terminé', 'bloqué') DEFAULT 'en cours',
+    date_mise_a_jour TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_user) REFERENCES utilisateurs(id),
+    FOREIGN KEY (id_domaine) REFERENCES domaines(id)
+);
+
+CREATE TABLE projets (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    titre VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES utilisateurs(id)
+);

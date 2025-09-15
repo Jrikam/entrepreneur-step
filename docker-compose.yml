@@ -5,7 +5,9 @@ services:
     image: mysql:8.0
     restart: always
     environment:
+    
       MYSQL_ROOT_PASSWORD: rootpass
+      PMA_COOKIE_SECURE: 0
       MYSQL_DATABASE: entrepreneur_db
       MYSQL_USER: entrepreneur_user
       MYSQL_PASSWORD: jade 
