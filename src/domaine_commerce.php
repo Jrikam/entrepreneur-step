@@ -36,6 +36,7 @@ require_once 'pdo.php';
     <div class="liens">
         <a href="ressources.php">📚 Ressources</a>
         <a href="#">⚖️ Légalité</a>
+        <a href="historique.php"> Enregistrer dans l'historique</a>
     </div>
 </div>
 </body>

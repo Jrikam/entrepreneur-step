@@ -11,7 +11,7 @@ $user_id = $_SESSION['user_id'];
 $points = $_SESSION['points'] ?? 0;
 $etapesValides = $_SESSION['etapes_valides'] ?? [];
 
-// Définition des étapes
+// Étapes du projet
 $etapes = [
     ['id' => 1, 'nom' => 'Définir le pitch du projet', 'desc' => 'Écrivez votre idée de projet.'],
     ['id' => 2, 'nom' => 'Faire une mini-étude de marché', 'desc' => 'Regardez le marché et notez vos observations.'],
@@ -19,15 +19,6 @@ $etapes = [
     ['id' => 4, 'nom' => 'Voir les financements possibles', 'desc' => 'Consultez les options pour financer votre projet.'],
     ['id' => 5, 'nom' => 'Choisir un statut juridique', 'desc' => 'Sélectionnez le statut adapté à votre projet.'],
     ['id' => 6, 'nom' => 'Présentation finale', 'desc' => 'Félicitations ! Vous avez préparé toutes les bases de votre projet.']
-];
-
-// Liens des pages de domaine
-$domainesFormulaires = [
-    1 => 'domaine_artisanat.php',
-    2 => 'domaine_audiovisuel.php',
-    3 => 'domaine_informatique.php',
-    4 => 'domaine_marketing.php',
-    5 => 'domaine_commerce.php'
 ];
 ?>
 <!DOCTYPE html>
@@ -47,29 +38,29 @@ $domainesFormulaires = [
 
 <div class="container">
     <h1>Bienvenue sur ton dashboard</h1>
+
     <?php
-// Calcul de la progression en % selon les étapes validées
-$totalEtapes = 6; // Nombre total d'étapes
-$etapesValides = $_SESSION['etapes_valides'] ?? [];
-$progress = round((count($etapesValides) / $totalEtapes) * 100);
-?>
-<div class="progress-container" style="width:80%; margin:20px auto; background:#ddd; border-radius:20px; height:25px;">
-    <div class="progress-bar" style="height:100%; border-radius:20px; background:#4caf50; width:<?= $progress ?>%; text-align:center; color:#fff; line-height:25px;">
-        <?= $progress ?>%
+    $totalEtapes = count($etapes);
+    $progress = round((count($etapesValides) / $totalEtapes) * 100);
+    ?>
+    <div class="progress-container" style="width:80%; margin:20px auto; background:#ddd; border-radius:20px; height:25px;">
+        <div class="progress-bar" style="height:100%; border-radius:20px; background:#4caf50; width:<?= $progress ?>%; text-align:center; color:#fff; line-height:25px;">
+            <?= $progress ?>%
+        </div>
     </div>
-</div>
 
     <p>Points actuels : <?= $points ?></p>
 
     <h2>Étapes du projet</h2>
-    <?php foreach ($etapes as $etape): 
-        $formLink = $domainesFormulaires[$etape['id']] ?? '#';
-    ?>
+    <?php foreach ($etapes as $etape): ?>
         <div class="etape">
             <h3><?= htmlspecialchars($etape['nom']) ?></h3>
             <p><?= htmlspecialchars($etape['desc']) ?></p>
 
-            <a href="<?= $formLink ?>"><button>Aller à l’action</button></a>
+            <!-- Lien vers service.php avec l'étape correspondante -->
+            <a href="service.php?domaine=<?= $etape['id'] ?>">
+                <button>Aller à l’action</button>
+            </a>
 
             <?php if (in_array($etape['id'], $etapesValides)): ?>
                 <span class="ok">✔ Validée</span>
@@ -81,10 +72,6 @@ $progress = round((count($etapesValides) / $totalEtapes) * 100);
             <?php endif; ?>
         </div>
     <?php endforeach; ?>
-
-    <div style="margin-top:20px;">
-        <button onclick="window.location.href='service.php'">Voir les services</button>
-    </div>
 </div>
 </body>
 </html>

@@ -126,7 +126,7 @@
     </header>
 
     <!-- Pitch -->
-    <div class="pitch">Bienvenue sur Entrepreneur Step ! Choisissez votre domaine et commencez votre projet.</div>
+    <div class="pitch"> Entrepreneur Step c'est une application qui vous guide pas à pas sur la création de l'application de vos reves. Chaque idée,chaque étape vous guide vers sa réalisation </div>
 
     <!-- Domaines -->
     <div class="domaines">
