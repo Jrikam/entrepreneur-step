@@ -11,26 +11,68 @@ $user_id = $_SESSION['user_id'];
 
 $legalite = [
     'Artisanat' => [
-        ['titre' => 'Guide de démarrage artisanal', 'lien' => 'https://www.lecoindesentrepreneurs.fr/creer-une-entreprise-artisanale', 'desc' => 'Comment créer une entreprise artisanale (Le coin des entrepreneurs.'],
-        ['titre' => 'Blog d’inspiration artisanale', 'lien' => 'https://artisandart.fr/creer-son-atelier-dartisanat-dart-guide-complet-2025/ ', 'desc' => 'Créer son atelier d’artisanat d’art']
+        [
+            'titre' => 'Créer légalement son entreprise artisanale',
+            'lien' => 'https://entreprendre.service-public.fr/vosdroits/F32887',
+            'desc' => 'Découvrez les démarches administratives nécessaires pour déclarer et légaliser une activité artisanale en France.',
+        ],
+        [
+            'titre' => 'Formalités légales pour l’artisanat',
+            'lien' => 'https://www.artisanat.fr/nous-connaitre/vous-accompagner/creation-entreprise',
+            'desc' => 'Informez-vous sur les obligations légales liées à l’exercice d’une activité artisanale, y compris les qualifications requises et les démarches à suivre.',
+        ],
     ],
     'Audiovisuel' => [
-         ['titre' => 'Beginner Filmmaker Playlist', 'lien' => 'https://www.youtube.com/playlist?list=PLXaPsavLQr11fU6ysUHegSiRTu6Xhuz7L', 'desc' => 'Tutoriels sur réalisation et montage pour débutants.'],
-        ['titre' => 'Ressources son et image libres', 'lien' => 'https://www.pexels.com/fr-fr/videos/', 'desc' => 'Banque de vidéos libres de droit pour vos projets audiovisuels.']
+        [
+            'titre' => 'Droits d’auteur et audiovisuel',
+            'lien' => 'https://entreprendre.service-public.fr/vosdroits/F22667',
+            'desc' => 'Comprenez la législation française relative aux œuvres audiovisuelles, y compris les droits des auteurs et les obligations des producteurs.',
+        ],
+        [
+            'titre' => 'Vidéos libres de droits',
+            'lien' => 'https://entreprendre.service-public.fr/vosdroits/F22388',
+            'desc' => 'Accédez à des ressources de vidéos libres de droits pour vos projets audiovisuels, en respectant les normes légales en vigueur.',
+        ],
     ],
     'Informatique' => [
-        ['titre' => 'Cours PHP', 'lien' => 'https://www.php.net/manual/fr/tutorial.php', 'desc' => 'Apprenez à créer des applications web en PHP.'],
-        ['titre' => 'Cours MySQL', 'lien' => 'https://dev.mysql.com/doc/', 'desc' => 'Guide officiel MySQL pour bases de données et requêtes SQL.']
+        [
+            'titre' => 'Protection des données personnelles (RGPD)',
+            'lien' => 'https://www.cnil.fr/fr/reglement-europeen-protection-donnees',
+            'desc' => 'Apprenez les principes du Règlement Général sur la Protection des Données (RGPD) et comment les appliquer dans vos projets numériques.',
+        ],
+        [
+            'titre' => 'Sécurité des données personnelles',
+            'lien' => 'https://www.cnil.fr/fr/guide-de-la-securite-des-donnees-personnelles',
+            'desc' => 'Conseils et bonnes pratiques pour protéger légalement les données personnelles dans vos projets numériques.',
+        ],
     ],
     'Marketing' => [
-        ['titre' => 'Guide du marketing digital', 'lien' => 'https://www.marketing-etudiant.fr', 'desc' => 'Bases pour promouvoir vos projets en ligne.'],
-        ['titre' => 'Outils gratuits de planification', 'lien' => 'https://www.canva.com/fr_fr/', 'desc' => 'Gérez vos campagnes marketing facilement.']
+        [
+            'titre' => 'Réglementation publicitaire en ligne',
+            'lien' => 'https://entreprendre.service-public.fr/vosdroits/F31228',
+            'desc' => 'Découvrez les règles encadrant la publicité en ligne en France, y compris la transparence et la non-tromperie.',
+        ],
+        [
+            'titre' => 'Protection des consommateurs et influenceurs',
+            'lien' => 'https://www.economie.gouv.fr/guide-bonne-conduite-influenceurs-createurs-contenu',
+            'desc' => 'Comprenez les obligations légales pour la communication marketing et les contenus sponsorisés.',
+        ],
     ],
     'Commerce' => [
-        ['titre' => 'Bases du e-commerce', 'lien' => 'https://www.shopify.fr/blog', 'desc' => 'Comment vendre en ligne facilement.'],
-        ['titre' => 'Conseils pour votre boutique', 'lien' => 'https://www.bpifrance-creation.fr/encyclopedie', 'desc' => 'Optimisez votre commerce local ou digital.']
-    ]
+        [
+            'titre' => 'Créer légalement sa société',
+            'lien' => 'https://entreprendre.service-public.fr/vosdroits/F23455',
+            'desc' => 'Suivez les étapes légales pour créer une société en France, du choix du statut juridique à l’immatriculation.',
+        ],
+        [
+            'titre' => 'Fiscalité et obligations légales',
+            'lien' => 'https://entreprendre.service-public.fr/vosdroits/F23571',
+            'desc' => 'Informez-vous sur les obligations fiscales et légales liées à l’exploitation d’un commerce en France.',
+        ],
+    ],
 ];
+
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -51,18 +93,18 @@ $legalite = [
 <div class="container">
     <h1>Ressources utiles pour vos projets</h1>
 
-    <?php foreach ($ressources as $domaine => $listeRessources): ?>
-        <section class="domaine">
-            <h2><?= htmlspecialchars($domaine) ?></h2>
-            <?php foreach ($listeRessources as $res): ?>
-                <div class="légalité">
-                    <h3><?= htmlspecialchars($res['titre']) ?></h3>
-                    <p><?= htmlspecialchars($res['desc']) ?></p>
-                    <a href="<?= htmlspecialchars($res['lien']) ?>" target="_blank">Voir les légalités</a>
-                </div>
-            <?php endforeach; ?>
-        </section>
-    <?php endforeach; ?>
+    <?php foreach ($legalite as $domaine => $listeRessources): ?>
+    <section class="domaine">
+        <h2><?= htmlspecialchars($domaine) ?></h2>
+        <?php foreach ($listeRessources as $res): ?>
+            <div class="legalite">
+                <h3><?= htmlspecialchars($res['titre']) ?></h3>
+                <p><?= htmlspecialchars($res['desc']) ?></p>
+                <a href="<?= htmlspecialchars($res['lien']) ?>" target="_blank">Lien ↗</a>
+            </div>
+        <?php endforeach; ?>
+    </section>
+<?php endforeach; ?>
 </div>
 </body>
 </html>

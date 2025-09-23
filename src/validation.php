@@ -8,7 +8,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
-$pointsParEtape = 10;
+$pointsParEtape = 20;
 
 // Vérifie si une étape est soumise
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['etape_id'])) {

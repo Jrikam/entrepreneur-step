@@ -53,3 +53,12 @@ CREATE TABLE projets (
     date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES utilisateurs(id)
 );
+
+CREATE TABLE IF NOT EXISTS historique_projets (
+    id_projet INT AUTO_INCREMENT PRIMARY KEY,
+    id_user INT NOT NULL,
+    nom_projet VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_user) REFERENCES utilisateurs(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
