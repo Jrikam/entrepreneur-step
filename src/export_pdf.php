@@ -10,39 +10,59 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 $user_id = $_SESSION['user_id'];
+$id_projet = isset($_GET['projet']) ? intval($_GET['projet']) : null;
+if (!$id_projet) die("Erreur : projet non spécifié.");
 
-// Récupérer **toutes les étapes avec leur statut réel** pour ce projet
+// Récupération du projet
+$stmt = $pdo->prepare("SELECT * FROM historique_projets WHERE id_projet=? AND id_user=?");
+$stmt->execute([$id_projet, $user_id]);
+$projet = $stmt->fetch(PDO::FETCH_ASSOC);
+if (!$projet) die("Erreur : projet introuvable.");
+
+// Récupération des progressions
 $stmt = $pdo->prepare("
-    SELECT etape, statut, date_mise_a_jour, action_text
-    FROM progression
-    WHERE id_user = ?
-    ORDER BY id_progression ASC
+    SELECT * FROM progression 
+    WHERE id_projet=? AND id_user=?
+    ORDER BY id_domaine ASC, id_progression ASC
 ");
-$stmt->execute([$user_id]);
+$stmt->execute([$id_projet, $user_id]);
 $progressions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Génération du HTML pour le PDF
 $html = '<h1>Mon parcours Entrepreneur Step</h1>';
-$html .= '<table border="1" cellpadding="8" cellspacing="0" width="100%">';
-$html .= '<tr><th>Étape</th><th>Statut</th><th>Date mise à jour</th><th>Contenu</th></tr>';
+$html .= '<h2>Projet : ' . htmlspecialchars($projet['nom_projet']) . '</h2>';
 
+$currentDomaine = null;
 foreach ($progressions as $p) {
-    $status_display = ($p['statut'] === 'termine') ? '✔ Validé' 
-                    : ($p['statut'] === 'en cours' ? '⏳ En cours' : '❌ Bloqué');
+    // Affichage du domaine
+    if ($currentDomaine !== $p['id_domaine']) {
+        $stmtD = $pdo->prepare("SELECT nom FROM domaines WHERE id=?");
+        $stmtD->execute([$p['id_domaine']]);
+        $domaine = $stmtD->fetch(PDO::FETCH_ASSOC);
+        $html .= '<h3>' . htmlspecialchars($domaine['nom']) . '</h3>';
+        $currentDomaine = $p['id_domaine'];
+    }
 
-    $html .= '<tr>';
-    $html .= '<td>' . htmlspecialchars($p['etape']) . '</td>';
-    $html .= '<td>' . $status_display . '</td>';
-    $html .= '<td>' . htmlspecialchars($p['date_mise_a_jour']) . '</td>';
-    $html .= '<td>' . nl2br(htmlspecialchars($p['action_text'])) . '</td>';
-    $html .= '</tr>';
+    $etape = htmlspecialchars($p['etape']);
+    $contenu = htmlspecialchars($p['action_text']);
+
+    // Détermination du statut affiché
+    if ($p['statut'] === 'termine' || (!empty($p['action_text']) && $p['statut'] === 'en cours')) {
+        $statutAffiche = '✔ Validée';
+    } elseif ($p['statut'] === 'en cours') {
+        $statutAffiche = '⏳ En cours';
+    } else {
+        $statutAffiche = '❌ Bloqué';
+    }
+
+    $html .= '<p><strong>' . $etape . '</strong> - ' . $statutAffiche . '</p>';
+    if (!empty($contenu)) {
+        $html .= '<p style="margin-left:20px;">' . nl2br($contenu) . '</p>';
+    }
 }
-
-$html .= '</table>';
 
 // Génération du PDF
 $mpdf = new Mpdf();
 $mpdf->WriteHTML($html);
 $mpdf->Output('parcours.pdf', 'D'); // téléchargement automatique
 exit();
-?>
