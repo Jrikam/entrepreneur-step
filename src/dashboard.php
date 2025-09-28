@@ -37,12 +37,12 @@ if (!$domaines) die("Erreur : aucun domaine trouvé.");
 
 // --- Étapes ---
 $etapes = [
-    ['id'=>1,'nom'=>'Définir le pitch du projet','desc'=>'Écrivez votre idée de projet.'],
-    ['id'=>2,'nom'=>'Faire une mini-étude de marché','desc'=>'Regardez le marché et notez vos observations.'],
-    ['id'=>3,'nom'=>'Écrire un mini-business plan','desc'=>'Structurer votre projet en quelques lignes.'],
+    ['id'=>1,'nom'=>'Definir le pitch du projet','desc'=>'Ecrivez votre idee de projet.'],
+    ['id'=>2,'nom'=>'Faire une mini-etude de marche','desc'=>'Regardez le marche et notez vos observations.'],
+    ['id'=>3,'nom'=>'Ecrire un mini-business plan','desc'=>'Structurer votre projet en quelques lignes.'],
     ['id'=>4,'nom'=>'Voir les financements possibles','desc'=>'Consultez les options pour financer votre projet.'],
-    ['id'=>5,'nom'=>'Choisir un statut juridique','desc'=>'Sélectionnez le statut adapté à votre projet.'],
-    ['id'=>6,'nom'=>'Présentation finale','desc'=>'Félicitations ! Vous avez préparé toutes les bases de votre projet.']
+    ['id'=>5,'nom'=>'Choisir un statut juridique','desc'=>'Selectionnez le statut adapte a votre projet.'],
+    ['id'=>6,'nom'=>'Presentation finale','desc'=>'Felicitations ! Vous avez prepare toutes les bases de votre projet.']
 ];
 $pointsParEtape = 20;
 
@@ -96,6 +96,12 @@ if (isset($_POST['reset_etape'])) {
     </select>
 </form>
     <h1>Dashboard pour le projet : <?= htmlspecialchars($projet_courant['nom_projet']) ?></h1>
+    <p>
+    <a href="export_pdf.php?projet=<?= $id_projet ?>" target="_blank" style="display:inline-block; margin-bottom:20px;">
+        Exporter en PDF
+    </a>
+</p>
+
 
     <!-- Bouton de réinitialisation globale -->
     <form method="POST" style="margin-bottom:20px;">

@@ -13,6 +13,16 @@ $user_id = $_SESSION['user_id'];
 $stmt = $pdo->prepare("SELECT * FROM historique_projets WHERE id_user = ? ORDER BY date_creation DESC");
 $stmt->execute([$user_id]);
 $projets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Liste complète des services possibles
+$all_services = [
+    'Définir le pitch du projet',
+    'Mini-étude de marché',
+    'Business plan simplifié',
+    'Financement possible',
+    'Choisir un statut juridique',
+    'Présentation finale'
+];
 ?>
 
 <!DOCTYPE html>
@@ -44,41 +54,44 @@ $projets = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php if(empty($projets)): ?>
         <p>Tu n’as encore enregistré aucun projet.</p>
     <?php else: ?>
-        <?php foreach($projets as $projet): ?>
-            <div class="projet">
-                <h3><?= htmlspecialchars($projet['nom_projet']) ?></h3>
-                <p><?= nl2br(htmlspecialchars($projet['description'])) ?></p>
-                <span>Date : <?= $projet['date_creation'] ?></span><br>
+        <?php foreach($projets as $projet): 
+            $id_projet = $projet['id_projet'];
+            $id_domaine = $projet['id_domaine'] ?? 1; // Domaine par défaut si non défini
 
-                <?php
-                // Récupérer les services validés pour ce projet et cet utilisateur
-                $stmt2 = $pdo->prepare("
-    SELECT id_domaine, etape AS service_nom
-    FROM progression
-    WHERE id_user = ? AND id_projet = ?
-    ORDER BY id_domaine ASC
-");
-$stmt2->execute([$user_id, $projet['id_projet']]);
-$services = $stmt2->fetchAll(PDO::FETCH_ASSOC);
-?>
+            // Récupérer les services validés pour ce projet
+            $stmt2 = $pdo->prepare("
+                SELECT etape
+                FROM progression
+                WHERE id_user = ? AND id_projet = ?
+                ORDER BY etape ASC
+            ");
+            $stmt2->execute([$user_id, $id_projet]);
+            $services_valides = $stmt2->fetchAll(PDO::FETCH_COLUMN, 0); // tableau des étapes déjà validées
 
-<?php if($services): ?>
-    <h4>Services :</h4>
-    <ul>
-        <?php foreach($services as $service): ?>
-            <li>
-                <?= htmlspecialchars($service['service_nom']) ?> - 
-                <a class="services-link" href="service.php?domaine=<?= $service['id_domaine'] ?>&projet=<?= $projet['id_projet'] ?>&etape=<?= rawurlencode($service['service_nom']) ?>">Reprendre</a>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-<?php else: ?>
-    <!-- Commencer le premier service par défaut -->
-    <a class="services-link" href="service.php?domaine=1&projet=<?= $projet['id_projet'] ?>&etape=<?= rawurlencode('Définir le pitch du projet') ?>">Commencer le service</a>
-<?php endif; ?>
+            // Services à compléter
+            $services_a_reprendre = array_diff($all_services, $services_valides);
+        ?>
+        <div class="projet">
+            <h3><?= htmlspecialchars($projet['nom_projet']) ?></h3>
+            <p><?= nl2br(htmlspecialchars($projet['description'])) ?></p>
+            <span>Date : <?= $projet['date_creation'] ?></span><br>
 
-                <a href="supprimer_projet.php?id=<?= $projet['id_projet'] ?>" onclick="return confirm('Supprimer ce projet ?')">Supprimer</a>
-            </div>
+            <?php if($services_a_reprendre): ?>
+                <h4>Services à compléter :</h4>
+                <ul>
+                    <?php foreach($services_a_reprendre as $service): ?>
+                        <li>
+                            <?= htmlspecialchars($service) ?> - 
+                            <a class="services-link" href="service.php?domaine=<?= $id_domaine ?>&projet=<?= $id_projet ?>&etape=<?= rawurlencode($service) ?>">Reprendre</a>
+                        </li>
+                    <?php endforeach; ?>
+                </ul>
+            <?php else: ?>
+                <p>Toutes les étapes sont validées pour ce projet.</p>
+            <?php endif; ?>
+
+            <a href="supprimer_projet.php?id=<?= $id_projet ?>" onclick="return confirm('Supprimer ce projet ?')">Supprimer</a>
+        </div>
         <?php endforeach; ?>
     <?php endif; ?>
 

@@ -31,28 +31,19 @@ if (!$domaine) die("Erreur : domaine introuvable.");
 $etape_courante = $_GET['etape'] ?? null;
 if (!$etape_courante) die("Erreur : étape non spécifiée.");
 // --- Mapping pour correspondre aux noms du dashboard ---
-$mapping_etapes = [
-    "Faire une mini-étude de marché" => "Mini-étude de marché",
-    "Écrire un mini-business plan" => "Business plan simplifié",
-    "Voir les financements possibles" => "Financement possible",
-    // tu peux ajouter d'autres alias si nécessaire
-];
 
-// Appliquer le mapping si nécessaire
-if ($etape_courante && isset($mapping_etapes[$etape_courante])) {
-    $etape_courante = $mapping_etapes[$etape_courante];
-}
 
 
 // --- Liste des services ---
 $services = [
-    ['nom' => 'Définir le pitch du projet', 'desc' => 'Un pitch : 1–2 phrases pour expliquer simplement ton projet.', 'lien' => 'https://bpifrance-creation.fr/boiteaoutils/guide-methodologique-du-pitch'],
-    ['nom' => 'Mini-étude de marché', 'desc' => 'Observe la concurrence et note les tendances et opportunités.', 'lien' => 'https://bpifrance-creation.fr/encyclopedie/faire-une-etude-de-marche'],
-    ['nom' => 'Business plan simplifié', 'desc' => 'Structure ton projet (objectifs, cible, besoins financiers).', 'lien' => 'https://bpifrance-creation.fr/encyclopedie/business-plan'],
-    ['nom' => 'Financement possible', 'desc' => 'Repère aides, subventions, prêts, crowdfunding adaptés à ton projet.', 'lien' => 'https://bpifrance.fr'],
+    ['nom' => 'Definir le pitch du projet', 'desc' => 'Un pitch : 1–2 phrases pour expliquer simplement ton projet.', 'lien' => 'https://bpifrance-creation.fr/boiteaoutils/guide-methodologique-du-pitch'],
+    ['nom' => 'Faire une mini-etude de marche', 'desc' => 'Observe la concurrence et note les tendances et opportunités.', 'lien' => 'https://bpifrance-creation.fr/encyclopedie/faire-une-etude-de-marche'],
+    ['nom' => 'Ecrire un mini-business plan', 'desc' => 'Structure ton projet (objectifs, cible, besoins financiers).', 'lien' => 'https://bpifrance-creation.fr/encyclopedie/business-plan'],
+    ['nom' => 'Voir les financements possibles', 'desc' => 'Repère aides, subventions, prêts, crowdfunding adaptés à ton projet.', 'lien' => 'https://bpifrance.fr'],
     ['nom' => 'Choisir un statut juridique', 'desc' => 'Compare rapidement les statuts (auto-entrepreneur, SAS, SARL, association...).', 'lien' => 'https://www.l-expert-comptable.com/a/534993-tableau-comparatif-des-statuts-juridiques-quel-statut-choisir.html'],
-    ['nom' => 'Présentation finale', 'desc' => 'Rassemble les points clés pour présenter ton projet (résumé, slides).', 'lien' => 'https://asana.com/fr/resources/executive-summary-examples'],
+    ['nom' => 'Presentation finale', 'desc' => 'Rassemble les points clés pour présenter ton projet (résumé, slides).', 'lien' => 'https://asana.com/fr/resources/executive-summary-examples'],
 ];
+
 
 // --- Trouver le service actuel (comparaison insensible aux accents, majuscules et espaces) ---
 $service = null;

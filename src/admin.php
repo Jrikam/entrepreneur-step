@@ -2,8 +2,16 @@
 session_start();
 require_once 'pdo.php';
 
-// Vérifie que l'utilisateur est admin
-if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
+if (!isset($_SESSION['user_id'])) {
+    header("Location: connexion.php");
+    exit();
+}
+
+$stmt = $pdo->prepare("SELECT role FROM utilisateurs WHERE id = ?");
+$stmt->execute([$_SESSION['user_id']]);
+$user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+if (!$user || $user['role'] !== 'admin') {
     header("Location: connexion.php");
     exit();
 }
@@ -78,5 +86,3 @@ th { background:#eee; }
 </body>
 </html>
 
-INSERT INTO utilisateurs (nom, email, mot_de_passe, role) 
-VALUES ('Admin', 'admin76000@gmail.com', MD5('MotDePasse123'), 'admin');

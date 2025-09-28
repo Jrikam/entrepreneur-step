@@ -4,34 +4,51 @@ require_once 'pdo.php';
 
 $error = "";
 
-// Si le formulaire est soumis
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['email']);
-    $password = $_POST['password'];
+    $email = trim($_POST['email'] ?? '');
+    $password = $_POST['password'] ?? '';
 
-    // Récupérer l'utilisateur
     $stmt = $pdo->prepare("SELECT * FROM utilisateurs WHERE email = ?");
     $stmt->execute([$email]);
     $user = $stmt->fetch();
 
-    if ($user && password_verify($password, $user['mot_de_passe'])) {
-        $_SESSION['user_id'] = $user['id'];
+    if ($user) {
+        $mot_de_passe_base = $user['mot_de_passe'];
 
-        // Vérifier si l'utilisateur a déjà un projet
-        $stmtProjet = $pdo->prepare("SELECT COUNT(*) FROM projets WHERE user_id = ?");
-        $stmtProjet->execute([$user['id']]);
-        $hasProjet = $stmtProjet->fetchColumn() > 0;
+        // Vérification MD5 (ancienne version)
+        if ($mot_de_passe_base === md5($password)) {
+            // Rehash avec password_hash pour sécuriser
+            $nouveau_hash = password_hash($password, PASSWORD_DEFAULT);
+            $stmtUpdate = $pdo->prepare("UPDATE utilisateurs SET mot_de_passe = ? WHERE id = ?");
+            $stmtUpdate->execute([$nouveau_hash, $user['id']]);
 
-        // Déterminer la page de redirection
-        if ($hasProjet) {
-            header("Location: dashboard.php");
+            $_SESSION['user_id'] = $user['id'];
+
+        } elseif (password_verify($password, $mot_de_passe_base)) {
+            $_SESSION['user_id'] = $user['id'];
         } else {
-            // Récupérer le domaine de l'utilisateur
-            $domaine = strtolower($user['domaine']); // 'artisanat', 'commerce', etc.
-            $formPage = "domaine_{$domaine}.php";
-            header("Location: $formPage");
+            $error = "Email ou mot de passe incorrect.";
         }
-        exit;
+
+        if (empty($error)) {
+            if (!empty($user['role']) && $user['role'] === 'admin') {
+                header("Location: admin.php");
+                exit;
+            }
+
+            $stmtProjet = $pdo->prepare("SELECT COUNT(*) FROM projets WHERE user_id = ?");
+            $stmtProjet->execute([$user['id']]);
+            $hasProjet = $stmtProjet->fetchColumn() > 0;
+
+            if ($hasProjet) {
+                header("Location: dashboard.php");
+            } else {
+                $domaine = strtolower($user['domaine'] ?? 'artisanat');
+                $formPage = "domaine_{$domaine}.php";
+                header("Location: $formPage");
+            }
+            exit;
+        }
     } else {
         $error = "Email ou mot de passe incorrect.";
     }
