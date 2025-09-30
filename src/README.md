@@ -23,15 +23,12 @@
 
 📌 **Kanban / Trello :**
 
-* *(lien Trello à compléter)*
+* *(lien Trello à comp
 
-📄 **Documentation projet :**
+📄 **Documentation projet:
+https://1drv.ms/w/c/26fbe3aa23804b75/EWMupzD1QLFNoO0hzsIhmywBltgKcqvkXRDkRBRbTxIGUw?e=Fe7gPc
 
-*
-
----
-
-## 🚀 Lancer l’application en local
+Lancer l’application en local:
 
 ### Prérequis :
 
