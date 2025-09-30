@@ -1,7 +1,7 @@
 
 # Entrepreneur Step
 
-**Entrepreneur Step** est une application pédagogique permettant aux jeunes entrepreneurs de **structurer leurs idées, suivre leurs projets étape par étape et accéder à des ressources adaptées** pour les accompagner dans la création et le développement de leur entreprise.
+**Entrepreneur Step** est une application pédagogique permettant aux jeunes entrepreneurs de structurer leurs idées, suivre leurs projets étape par étape et accéder à des ressources adaptées** pour les accompagner dans la création et le développement de leur entreprise.
 
 ---
 
