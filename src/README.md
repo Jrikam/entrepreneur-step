@@ -42,7 +42,7 @@
 ```bash
 git clone https://github.com/ton-compte/entrepreneur-step.git
 cd entrepreneur-step
-docker-compose up --build
+docker-compose up 
 ```
 
 ### 🔗 Accès à l'application
