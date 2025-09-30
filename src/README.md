@@ -21,9 +21,7 @@
 
 
 
-📌 **Kanban / Trello :**
 
-* *(lien Trello à comp
 
 📄 **Documentation projet:
 https://1drv.ms/w/c/26fbe3aa23804b75/EWMupzD1QLFNoO0hzsIhmywBltgKcqvkXRDkRBRbTxIGUw?e=Fe7gPc
@@ -37,14 +35,14 @@ Lancer l’application en local:
 ### Installation :
 
 ```bash
-git clone https://github.com/ton-compte/entrepreneur-step.git
+git clone https://github.com/Jrikam/entrepreneur-step
 cd entrepreneur-step
 docker-compose up 
 ```
 
 ### 🔗 Accès à l'application
 
-* URL locale : [http://localhost:8080/](http://localhost:8080/)
+* URL locale : [localhost:8088/index.php)
 
 ### 👤 Connexions possibles (exemple scolaire)
 
