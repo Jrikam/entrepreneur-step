@@ -31,14 +31,24 @@ https://1drv.ms/w/c/26fbe3aa23804b75/EWMupzD1QLFNoO0hzsIhmywBltgKcqvkXRDkRBRbTxI
 
 * Docker & Docker Compose installés
 
-### Installation :
+### Installation
 
-```bash
-Pour voir l'entièrté de mon projet:
-git clone : https://github.com/Jrikam/entrepreneur-step
+À Faire sur un terminal
+
+Installer Docker:
+
+👉 https://www.docker.com/get-started
+
+Étapes
+Cloner le projet :
+git clone https://github.com/Jrikam/entrepreneur-step
 cd entrepreneur-step
-docker-compose up 
-```
+
+Pour démarrer l'appli
+docker-compose up --build
+
+Pour arreter l'appli:
+docker-compose down
 
 ### 🔗 Accès à l'application
 
