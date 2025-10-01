@@ -2,27 +2,36 @@
 session_start();
 require_once 'pdo.php';
 
+// --- Vérification utilisateur ---
 if (!isset($_SESSION['user_id'])) {
     header("Location: connexion.php");
     exit();
 }
-
 $user_id = $_SESSION['user_id'];
 
-// Récupère tous les projets de l'utilisateur
+// --- Récupérer tous les projets de l'utilisateur ---
 $stmt = $pdo->prepare("SELECT * FROM historique_projets WHERE id_user = ? ORDER BY date_creation DESC");
 $stmt->execute([$user_id]);
 $projets = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Liste complète des services possibles
+// --- Liste complète des services ---
 $all_services = [
-    'Définir le pitch du projet',
-    'Mini-étude de marché',
-    'Business plan simplifié',
-    'Financement possible',
+    'Definir le pitch du projet',
+    'Faire une mini-etude de marche',
+    'Ecrire un mini-business plan',
+    'Voir les financements possibles',
     'Choisir un statut juridique',
-    'Présentation finale'
+    'Presentation finale'
 ];
+
+// --- Fonction de normalisation pour comparer sans accents/majuscules ---
+function normalize($str) {
+    $str = trim($str);
+    $str = mb_strtolower($str);
+    $str = iconv('UTF-8', 'ASCII//TRANSLIT', $str);
+    $str = preg_replace('/[^a-z0-9 ]/', '', $str);
+    return $str;
+}
 ?>
 
 <!DOCTYPE html>
@@ -56,20 +65,27 @@ $all_services = [
     <?php else: ?>
         <?php foreach($projets as $projet): 
             $id_projet = $projet['id_projet'];
-            $id_domaine = $projet['id_domaine'] ?? 1; // Domaine par défaut si non défini
+            $id_domaine = $projet['id_domaine'] ?? 1;
 
-            // Récupérer les services validés pour ce projet
+            // Récupérer les services déjà validés pour ce projet
             $stmt2 = $pdo->prepare("
-                SELECT etape
-                FROM progression
+                SELECT etape 
+                FROM progression 
                 WHERE id_user = ? AND id_projet = ?
-                ORDER BY etape ASC
             ");
             $stmt2->execute([$user_id, $id_projet]);
-            $services_valides = $stmt2->fetchAll(PDO::FETCH_COLUMN, 0); // tableau des étapes déjà validées
+            $services_valides = $stmt2->fetchAll(PDO::FETCH_COLUMN, 0);
+
+            // Normalisation pour comparaison
+            $services_valides_norm = array_map('normalize', $services_valides);
 
             // Services à compléter
-            $services_a_reprendre = array_diff($all_services, $services_valides);
+            $services_a_reprendre = [];
+            foreach($all_services as $service) {
+                if(!in_array(normalize($service), $services_valides_norm)) {
+                    $services_a_reprendre[] = $service;
+                }
+            }
         ?>
         <div class="projet">
             <h3><?= htmlspecialchars($projet['nom_projet']) ?></h3>
@@ -94,7 +110,6 @@ $all_services = [
         </div>
         <?php endforeach; ?>
     <?php endif; ?>
-
 </div>
 </body>
 </html>

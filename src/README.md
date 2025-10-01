@@ -16,7 +16,7 @@
 💻 **Version desktop :**
 
 * Page d’accueil : https://www.figma.com/design/GbU9Vk9ZsResA5kyq61FbC/Untitled--Copy-?m=auto&t=AfOpuJMmEAvxmmsz-6
-* Page tableau de bord : https://www.figma.com/design/GbU9Vk9ZsResA5kyq61FbC/Untitled--Copy-?m=auto&t=AfOpuJMmEAvxmmsz-6
+* Page tableau de bord : htttps://www.figma.com/design/GbU9Vk9ZsResA5kyq61FbC/Untitled--Copy-?m=auto&t=AfOpuJMmEAvxmmsz-6
 *  Page Tableau de bord  : https://www.figma.com/design/GbU9Vk9ZsResA5kyq61FbC/Untitled--Copy-?m=auto&t=AfOpuJMmEAvxmmsz-6
 
 
@@ -24,7 +24,7 @@
 
 
 📄 **Documentation projet:
-https://1drv.ms/w/c/26fbe3aa23804b75/EWMupzD1QLFNoO0hzsIhmywBltgKcqvkXRDkRBRbTxIGUw?e=Fe7gPc
+https://1drv.ms/w/c/26fbe3aa23804b75/EWMupzD1QLFNoO0hzsIhmywBltgKcqvkXRDkRBRbTxIGUw?e=En4vy2
 
 Lancer l’application en local:
 
