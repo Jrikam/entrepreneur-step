@@ -23,10 +23,8 @@
 
 
 
-📄 **Documentation projet:
-https://1drv.ms/w/c/26fbe3aa23804b75/EWMupzD1QLFNoO0hzsIhmywBltgKcqvkXRDkRBRbTxIGUw?e=En4vy2
-
-Lancer l’application en local:
+📄 CAHIERS DES CHARGES ENTREPRENEUR STEP VOICI LE BON LIEN DÉSOLÉ POUR MA MALADRESSE:
+https://1drv.ms/w/c/26fbe3aa23804b75/EWMupzD1QLFNoO0hzsIhmywBltgKcqvkXRDkRBRbTxIGUw?e=aXubBe
 
 ### Prérequis :
 
