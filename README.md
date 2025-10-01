@@ -35,7 +35,8 @@ Lancer l’application en local:
 ### Installation :
 
 ```bash
-git clone https://github.com/Jrikam/entrepreneur-step
+Pour voir l'entièrté de mon projet:
+git clone : https://github.com/Jrikam/entrepreneur-step
 cd entrepreneur-step
 docker-compose up 
 ```
