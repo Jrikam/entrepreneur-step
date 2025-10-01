@@ -1,0 +1,44 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+    
+      MYSQL_ROOT_PASSWORD: rootpass
+      PMA_COOKIE_SECURE: 0
+      MYSQL_DATABASE: entrepreneur_db
+      MYSQL_USER: entrepreneur_user
+      MYSQL_PASSWORD: jade 
+    ports:
+      - "3308:3306"   # MySQL exposé sur 3308 sur ta machine
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+      - "8087:80"     # phpMyAdmin accessible sur 8083
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: rootpass
+    depends_on:
+      - db
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: entrepreneur_web
+    ports:
+      - "8088:80"     # Apache exposé sur 8087
+    volumes:
+      - ./src:/var/www/html
+    depends_on:
+      - db
+
+volumes:
+  db_data:
